@@ -110,6 +110,7 @@ type Cfg struct {
 	InstanceName      string
 	ServeFromSubPath  bool
 	StaticRootPath    string
+	WorkspacePath     string
 	Protocol          Scheme
 	ServeOnSocket     bool
 	SocketGid         int
@@ -2214,6 +2215,9 @@ func (cfg *Cfg) readServerSettings(iniFile *ini.File) error {
 	if err := cfg.validateStaticRootPath(); err != nil {
 		return err
 	}
+
+	workspacePath := valueAsString(server, "workspace_path", "workspace")
+	cfg.WorkspacePath = makeAbsolute(workspacePath, cfg.HomePath)
 
 	cdnURL := valueAsString(server, "cdn_url", "")
 	if cdnURL != "" {

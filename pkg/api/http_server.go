@@ -694,6 +694,9 @@ func (hs *HTTPServer) addMiddlewaresAndStaticRoutes() {
 		hs.mapStatic(m, hs.Cfg.ImagesDir, "", "/public/img/attachments")
 	}
 
+	// Serve workspace directory for user files
+	hs.mapStatic(m, hs.Cfg.WorkspacePath, "", "/workspace")
+
 	if len(hs.Cfg.CustomResponseHeaders) > 0 {
 		m.Use(middleware.AddCustomResponseHeaders(hs.Cfg))
 	}
